@@ -5,6 +5,7 @@ TodoInput = React.createClass
     propTypes:
         onSave: ReactPropTypes.func.isRequired
         placeholder: ReactPropTypes.string
+        onDestroy: ReactPropTypes.func.isRequired
 
     render: ->
         <input
@@ -12,6 +13,7 @@ TodoInput = React.createClass
             onKeyDown={this._onKeyDown}
             placeholder={this.props.placeholder}
             ref="input"
+            onDestroy={this.props.onDestroy}
         />
 
     _onKeyDown: (event) ->

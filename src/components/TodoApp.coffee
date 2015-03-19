@@ -27,11 +27,16 @@ TodoApp = React.createClass
             />
             <TodoList
                 data={this.state.data}
+                onDestroy={this._onDestroy}
             />
         </div>
 
     _onSave: (value) ->
         setTodo(value)
+        this.loadTodos()
+
+    _onDestroy: (id) ->
+        delete todos[id]
         this.loadTodos()
 
 module.exports = TodoApp
