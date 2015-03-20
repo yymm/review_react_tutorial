@@ -1,10 +1,10 @@
 React = require("react")
 ReactPropTypes = React.PropTypes
+TodoActions = require("../actions/TodoActions.coffee")
 
 TodoItem = React.createClass
     propTypes:
         todo: ReactPropTypes.object.isRequired
-        onDestroy: ReactPropTypes.func.isRequired
 
     render: ->
         todo = this.props.todo
@@ -16,6 +16,6 @@ TodoItem = React.createClass
         )
 
     _onDestroyClick: ->
-        this.props.onDestroy this.props.todo.id
+        TodoActions.destroy(this.props.todo.id)
 
 module.exports = TodoItem

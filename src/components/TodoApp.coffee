@@ -1,23 +1,22 @@
+# view-controller
+
 React = require("react")
+TodoStore = require("../stores/TodoStore.coffee")
 TodoInput = require("./TodoInput.coffee")
 TodoList = require("./TodoList.coffee")
 
-todos = {}
-
-getTodos = () ->
-    return todos
-
-setTodo = (value) ->
-    id = (+ new Date()).toString(36)
-    todos[id] = {id: id, value: value}
-    return id
+getTodoState = () ->
+    return {data: TodoStore.getAll()}
 
 TodoApp = React.createClass
-    loadTodos: ->
-        this.setState({data: getTodos()})
-    
     getInitialState: ->
-        return {data: {}}
+        return getTodoState()
+
+    componentDidMount: ->
+        TodoStore.addChangeListener(this._onChange)
+
+    componentWillUnmount: ->
+        TodoStore.removeChangeListener(this._onChange)
 
     render: ->
         <div>
@@ -31,12 +30,7 @@ TodoApp = React.createClass
             />
         </div>
 
-    _onSave: (value) ->
-        setTodo(value)
-        this.loadTodos()
-
-    _onDestroy: (id) ->
-        delete todos[id]
-        this.loadTodos()
+    _onChange: ->
+        this.setState(getTodoState())
 
 module.exports = TodoApp
